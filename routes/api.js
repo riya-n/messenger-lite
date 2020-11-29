@@ -1,5 +1,4 @@
 const express = require('express');
-const { Types } = require('mongoose');
 
 const User = require('../models/user');
 const Chat = require('../models/chat');
@@ -8,7 +7,7 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 const router = express.Router();
 
 router.get('/chats', isAuthenticated, (req, res, next) => {
-  const { username } = req.body;
+  const { username } = req.session;
 
   User.findOne({ username }, (error, user) => {
     if (user) {
@@ -22,7 +21,7 @@ router.get('/chats', isAuthenticated, (req, res, next) => {
 router.get('/chat', isAuthenticated, (req, res, next) => {
   const { chatId } = req.body;
 
-  Chat.findOne({ chatId }, (error, chat) => {
+  Chat.findById(chatId, (error, chat) => {
     if (chat) {
       res.send(chat);
     } else {
@@ -31,8 +30,9 @@ router.get('/chat', isAuthenticated, (req, res, next) => {
   })
 })
 
-router.post('/chat/add', isAuthenticated, async (req, res, next) => {
-  const { chatId, msg, username2 } = req.body;
+router.post('/chat', isAuthenticated, async (req, res, next) => {
+  let { chatId } = req.body;
+  const { msg, username2 } = req.body;
   const { username } = req.session;
 
   const msgObj = {
@@ -42,33 +42,35 @@ router.post('/chat/add', isAuthenticated, async (req, res, next) => {
   };
 
   try {
-    if (chatId) {
-      // the chat exists in the db
-      await Chat.findOneAndUpdate({ chatId },
-        { '$push': { 'msgs': msgObj } },
-        { useFindAndModify: true });
-    } else {
-      chatId = Types.ObjectId(); // generates new id
+    if (chatId === undefined) {
 
       // new chat
-      await Chat.create({
-        chatId,
-        username1: username,
-        username2,
-        msgs: [msgObj],
+      await Chat.create({ username1: username, username2, msgs: [msgObj] },
+        async (error, chat) => {
+          if (error) {
+            next(error);
+          } else {
+            chatId = chat._id;
+
+            // add chat to both user objects
+            await User.findOneAndUpdate(
+              { username },
+              {'$push': { 'chats': { chatId, username: username2 } } },
+              { useFindAndModify: true }
+            );
+            await User.findOneAndUpdate(
+              { username: username2 },
+              {'$push': { 'chats': { chatId, username } } },
+              { useFindAndModify: true }
+            );
+          }
       });
 
-      // add chat to both user objects
-      await User.findOneAndUpdate(
-        { username },
-        {'$push': { 'chats': { chatId, username: username2 } } },
-        { useFindAndModify: true }
-      );
-      await User.findOneAndUpdate(
-        { username2 },
-        {'$push': { 'chats': { chatId, username } } },
-        { useFindAndModify: true }
-      );
+    } else {
+      // the chat exists in the db
+      await Chat.findByIdAndUpdate(chatId,
+        { '$push': { 'msgs': msgObj } },
+        { useFindAndModify: true });
     }
 
     res.send('msg added successfully');
