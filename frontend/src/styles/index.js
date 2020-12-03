@@ -1,28 +1,75 @@
 import s from 'styled-components';
 
-export const AccountPage = s.div`
-  margin: 1rem 2rem;
-  font-family: ui-monospace;
+export const Page = s.div`
+  margin: 1rem 4rem;
+  font-family: Calibre, Helvetica Neue, Segoe UI, Helvetica, Arial, Lucida Grande, sans-serif;
+  top: 30%;
+  position: absolute;
+`;
+
+export const Logo = s.img`
+  margin: 2rem 2rem;
+  height: 40px;
+  width: 40px;
+`;
+
+export const LinkWrapper = s.span`
+ margin-left: 20px;
 `;
 
 export const InputBox = s.input`
+  background: rgba(0, 0, 0, .04);
+  border: none;
+  border-radius: 10px;
+  color: rgba(0, 0, 0, 1);
   display: block;
+  height: 36px;
+  margin-bottom: 12px;
+  padding: 8px 16px;
   width: 100%;
-  padding: .375rem .75rem;
-  color: #283033;
-  border: 1px solid #ced4da;
-  border-radius: .25rem;
-  margin-bottom: 1rem;
+  &:focus {
+    color: rgba(0, 0, 0, 0.8);
+    outline-width: 0px;
+    border: 0.1px solid #0084ff;
+  }
 `;
 
 export const ActionButton = s.button`
   cursor: pointer;
-  width: 100%;
-  background-color: rgb(64,224,208);
-  color: white;
-  font-weight: 500;
-  border: 1px solid transparent;
-  padding: .5rem .75rem;
-  border-radius: .25rem;
-  margin-bottom: 0.5rem;
+  background-color: #0084ff;
+  border: 1px solid #0084ff;
+  color: #fff;
+  height: 40px;
+  line-height: 19px;
+  margin-bottom: 12px;
+  border-radius: 20px;
+  box-sizing: content-box;
+  width: 400px;
+  &:hover {
+    background-color: #5218fa;
+  }
+  &:focus {
+    outline-width: 0px;
+  }
+  &:active {
+    opacity: 0.3;
+  }
+`;
+
+export const Title = s.h1`
+  background: linear-gradient(81.84deg, #0099ff -9.4%, #43cea2 51.57%, #02aab0 84.07%, #185a9d 90.59%);
+  background: linear-gradient(81.84deg, #0099ff -9.4%, #a033ff 51.57%, #ff5280 84.07%, #ff7061 90.59%);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 60px;
+  font-weight: 450;
+  letter-spacing: -2px;
+  padding: 0 0 8px;
+`;
+
+export const Subtitle = s.h3`
+  color: #595959;
+  margin: 0 0 38px;
+  font-size: 20px;
+  font-weight: 400;
 `;

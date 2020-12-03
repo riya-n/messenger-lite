@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 
+import LandingPage from './LandingPage';
 import HomePage from './HomePage';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
@@ -14,6 +15,9 @@ const App = () => (
   <Router>
     <Switch>
       <Route exact path="/">
+        <LandingPage />
+      </Route>
+      <Route path="/home">
         <HomePage />
       </Route>
       <Route path="/signup">
