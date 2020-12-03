@@ -7,7 +7,7 @@ const chatSchema = new Schema({
     msg: { type: String },
     username: { type: String },
     time: { type: Date },
-  }]
+  }],
 });
 
 module.exports = model('Chat', chatSchema);
