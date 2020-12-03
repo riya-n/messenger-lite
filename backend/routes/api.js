@@ -15,7 +15,7 @@ router.get('/chats', isAuthenticated, (req, res, next) => {
     } else {
       next(error);
     }
-  })
+  });
 });
 
 router.get('/chat', isAuthenticated, (req, res, next) => {
@@ -27,8 +27,8 @@ router.get('/chat', isAuthenticated, (req, res, next) => {
     } else {
       next(error);
     }
-  })
-})
+  });
+});
 
 router.post('/chat', isAuthenticated, async (req, res, next) => {
   let { chatId } = req.body;
@@ -43,33 +43,32 @@ router.post('/chat', isAuthenticated, async (req, res, next) => {
 
   try {
     if (chatId === undefined) {
-
       // new chat
       await Chat.create({ username1: username, username2, msgs: [msgObj] },
         async (error, chat) => {
           if (error) {
             next(error);
           } else {
+            // eslint-disable-next-line no-underscore-dangle
             chatId = chat._id;
 
             // add chat to both user objects
             await User.findOneAndUpdate(
               { username },
-              {'$push': { 'chats': { chatId, username: username2 } } },
-              { useFindAndModify: true }
+              { $push: { chats: { chatId, username: username2 } } },
+              { useFindAndModify: true },
             );
             await User.findOneAndUpdate(
               { username: username2 },
-              {'$push': { 'chats': { chatId, username } } },
-              { useFindAndModify: true }
+              { $push: { chats: { chatId, username } } },
+              { useFindAndModify: true },
             );
           }
-      });
-
+        });
     } else {
       // the chat exists in the db
       await Chat.findByIdAndUpdate(chatId,
-        { '$push': { 'msgs': msgObj } },
+        { $push: { msgs: msgObj } },
         { useFindAndModify: true });
     }
 
