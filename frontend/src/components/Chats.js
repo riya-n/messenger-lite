@@ -14,6 +14,10 @@ const Chats = (props) => {
     try {
       const data = await axios.get('/api/chats');
       setConversations(data.data);
+
+      if (otherUser === '' && data.data.length > 0) {
+        setOtherUser(data.data[0].username);
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e);

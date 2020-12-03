@@ -110,3 +110,16 @@ export const ChatElement = s(SearchElement)`
 export const CurrChatElement = s(ChatElement)`
   background-color: rgba(0, 0, 0, .04);
 `;
+
+export const MyMsg = s(SearchElement)`
+  border-radius: 20px;
+  background-color: #0084ff;
+  color: white;
+  float: right;
+`;
+
+export const OtherMsg = s(SearchElement)`
+  border-radius: 20px;
+  background-color: rgba(0, 0, 0, .04);
+  float: left;
+`;

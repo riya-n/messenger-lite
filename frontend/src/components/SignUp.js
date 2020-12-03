@@ -15,17 +15,21 @@ const SignUp = () => {
   const history = useHistory();
 
   const signup = async () => {
-    if (password !== confirmPass) {
-      setErrorMsg('Passwords do not match. Please try again.');
-      return;
-    }
-    try {
-      setErrorMsg('');
-      await axios.post('/account/signup', { username, password });
-      history.push('/home');
-    } catch (e) {
-      setErrorMsg('Failed to sign up. Please try again.');
-    }
+    await axios.get('/api/users').then(async (data) => {
+      if (data.data.includes(username)) {
+        setErrorMsg('Sorry, this username is already taken. Please try again.');
+      } else if (password !== confirmPass) {
+        setErrorMsg('Passwords do not match. Please try again.');
+      } else {
+        try {
+          setErrorMsg('');
+          await axios.post('/account/signup', { username, password });
+          history.push('/home');
+        } catch (e) {
+          setErrorMsg('Failed to sign up. Please try again.');
+        }
+      }
+    });
   };
 
   return (

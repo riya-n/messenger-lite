@@ -11,7 +11,6 @@ import { MainPage, ActionButton } from '../styles';
 const HomePage = () => {
   const [searching, setSearching] = useState(false);
   const [otherUser, setOtherUser] = useState('');
-  const [currChatId, setCurrChatId] = useState('');
   const history = useHistory();
 
   const logout = async () => {
@@ -24,11 +23,13 @@ const HomePage = () => {
       <>
         <Search setOtherUser={setOtherUser} setSearching={setSearching} searching={searching} />
         {
-          searching ? '' : <Chats setOtherUser={setOtherUser} otherUser={otherUser} setCurrChatId={setCurrChatId} />
+          searching ? '' : <Chats setOtherUser={setOtherUser} otherUser={otherUser} />
         }
         <ActionButton type="submit" onClick={() => logout()} style={{ display: 'block' }}>Sign Out</ActionButton>
       </>
-      <Chat otherUser={otherUser} currChatId={currChatId} />
+      {
+        otherUser ? <Chat otherUser={otherUser} /> : ''
+      }
     </MainPage>
   );
 };

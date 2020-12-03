@@ -14,6 +14,7 @@ router.post('/', (req, res) => {
 
 router.post('/signup', async (req, res, next) => {
   const { username, password } = req.body;
+  console.log('made it here');
 
   try {
     await User.create({ username, password, chats: [] });

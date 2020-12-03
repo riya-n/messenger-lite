@@ -19,20 +19,26 @@ router.get('/chats', isAuthenticated, (req, res, next) => {
 });
 
 router.get('/chat', isAuthenticated, (req, res, next) => {
-  const { chatId } = req.body;
+  // console.log(req);
+  const { chatId } = req.query;
+  console.log('chatid', chatId);
 
   Chat.findById(chatId, (error, chat) => {
     if (chat) {
+      console.log('sending', chat);
       res.send(chat);
     } else {
+      console.log('ooopppps');
       next(error);
     }
   });
 });
 
 router.get('/users', isAuthenticated, (req, res, next) => {
+  console.log('in hereee yea');
   User.find({}, (error, users) => {
     if (users) {
+      console.log(users);
       const usernames = [];
       users.forEach(({ username }) => {
         usernames.push(username);
@@ -42,6 +48,7 @@ router.get('/users', isAuthenticated, (req, res, next) => {
       next(error);
     }
   });
+  res.send([]);
 });
 
 router.post('/chat', isAuthenticated, async (req, res, next) => {
@@ -85,8 +92,6 @@ router.post('/chat', isAuthenticated, async (req, res, next) => {
         { $push: { msgs: msgObj } },
         { useFindAndModify: true });
     }
-
-    res.send('msg added successfully');
   } catch (error) {
     next(error);
   }
