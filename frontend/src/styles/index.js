@@ -17,6 +17,10 @@ export const LinkWrapper = s.span`
  margin-left: 20px;
 `;
 
+export const ErrorMessage = s.div`
+  color: #f03d25;
+`;
+
 export const InputBox = s.input`
   background: rgba(0, 0, 0, .04);
   border: none;

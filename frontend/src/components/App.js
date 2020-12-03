@@ -10,24 +10,28 @@ import LandingPage from './LandingPage';
 import HomePage from './HomePage';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
+import { Logo } from '../styles';
 
 const App = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/">
-        <LandingPage />
-      </Route>
-      <Route path="/home">
-        <HomePage />
-      </Route>
-      <Route path="/signup">
-        <SignUp />
-      </Route>
-      <Route path="/login">
-        <LogIn />
-      </Route>
-    </Switch>
-  </Router>
+  <>
+    <Logo src="https://tinyurl.com/y6mh68tx" alt="Messenger Lite" />
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route path="/home">
+          <HomePage />
+        </Route>
+        <Route path="/signup">
+          <SignUp />
+        </Route>
+        <Route path="/login">
+          <LogIn />
+        </Route>
+      </Switch>
+    </Router>
+  </>
 );
 
 export default App;

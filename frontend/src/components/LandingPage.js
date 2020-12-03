@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  ActionButton, Page, Title, Subtitle, Logo,
+  ActionButton, Page, Title, Subtitle,
 } from '../styles';
 
 const LandingPage = () => {
@@ -11,7 +11,6 @@ const LandingPage = () => {
 
   return (
     <>
-      <Logo src="https://scontent.fsin5-1.fna.fbcdn.net/v/t39.8562-6/120009688_325579128711709_1736249742330805861_n.png?_nc_cat=1&ccb=2&_nc_sid=6825c5&_nc_ohc=70gupuu05msAX_2Fr8E&_nc_ht=scontent.fsin5-1.fna&oh=e57a33508de0238e5a5653c9844e22d6&oe=5FEEF4FD" alt="Messenger Lite" />
       <Page>
         <Title>
           Hang out whenever,
