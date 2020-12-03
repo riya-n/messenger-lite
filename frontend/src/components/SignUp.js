@@ -36,7 +36,7 @@ const SignUp = () => {
         <InputBox placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
         <InputBox placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
         <InputBox placeholder="Confirm Password" type="password" onChange={(e) => setConfirmPass(e.target.value)} />
-        <ActionButton type="submit" onClick={() => signup()}>Sign Up</ActionButton>
+        <ActionButton type="submit" onClick={() => signup()} style={{ width: 400 }}>Sign Up</ActionButton>
         <LinkWrapper><Link to="/login">Or sign in here</Link></LinkWrapper>
         <ErrorMessage>{errorMsg}</ErrorMessage>
       </Page>

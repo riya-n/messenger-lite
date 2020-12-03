@@ -7,6 +7,11 @@ export const Page = s.div`
   position: absolute;
 `;
 
+export const MainPage = s.div`
+  margin: 1rem 2rem;
+  font-family: Calibre, Helvetica Neue, Segoe UI, Helvetica, Arial, Lucida Grande, sans-serif;
+`;
+
 export const Logo = s.img`
   margin: 2rem 2rem;
   height: 40px;
@@ -47,8 +52,8 @@ export const ActionButton = s.button`
   line-height: 19px;
   margin-bottom: 12px;
   border-radius: 20px;
-  box-sizing: content-box;
-  width: 400px;
+  width: 100%;
+  max-width: 400px;
   &:hover {
     background-color: #5218fa;
   }
@@ -76,4 +81,32 @@ export const Subtitle = s.h3`
   margin: 0 0 38px;
   font-size: 20px;
   font-weight: 400;
+`;
+
+export const List = s.div`
+  display: block;
+  margin-bottom: 1rem;
+`;
+
+export const SearchElement = s.div`
+  display: block;
+  color: #1c1e21;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px 10px;
+  overflow: hidden;
+  padding: 8px 16px;
+  margin: 0.5rem 0rem;
+  border-radius: 10px;
+  &:hover {
+    background-color: rgba(0, 0, 0, .02);
+  }
+`;
+
+export const ChatElement = s(SearchElement)`
+  font-size: 18px;
+`;
+
+export const CurrChatElement = s(ChatElement)`
+  background-color: rgba(0, 0, 0, .04);
 `;

@@ -30,6 +30,20 @@ router.get('/chat', isAuthenticated, (req, res, next) => {
   });
 });
 
+router.get('/users', isAuthenticated, (req, res, next) => {
+  User.find({}, (error, users) => {
+    if (users) {
+      const usernames = [];
+      users.forEach(({ username }) => {
+        usernames.push(username);
+      });
+      res.send(usernames);
+    } else {
+      next(error);
+    }
+  });
+});
+
 router.post('/chat', isAuthenticated, async (req, res, next) => {
   let { chatId } = req.body;
   const { msg, username2 } = req.body;
