@@ -8,8 +8,23 @@ export const Page = s.div`
 `;
 
 export const MainPage = s.div`
-  margin: 1rem 2rem;
+  margin: 0rem 1rem;
   font-family: Calibre, Helvetica Neue, Segoe UI, Helvetica, Arial, Lucida Grande, sans-serif;
+  height: 100%;
+  display: flex;
+`;
+
+export const LeftPanel = s.div`
+padding: 1rem 1rem;
+  border-right: 1px solid rgb(40, 48, 51, 0.2);
+  width: 40%;
+  height: 100%;
+`;
+
+export const RightPanel = s.div`
+  padding: 1rem 1rem;
+  width: -webkit-fill-available;
+  height: 100%;
 `;
 
 export const Logo = s.img`
