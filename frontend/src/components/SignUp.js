@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 
 import {
-  InputBox, ActionButton, Page, Title, Subtitle, LinkWrapper, ErrorMessage,
+  InputBox, ActionButton, Page, Title, Subtitle, LinkWrapper, ErrorMessage, Logo,
 } from '../styles';
 
 const SignUp = () => {
@@ -16,7 +16,7 @@ const SignUp = () => {
 
   const signup = async () => {
     await axios.get('/api/users').then(async (data) => {
-      if (data.data.includes(username)) {
+      if (data.data.some((el) => el.username === username)) {
         setErrorMsg('Sorry, this username is already taken. Please try again.');
       } else if (password !== confirmPass) {
         setErrorMsg('Passwords do not match. Please try again.');
@@ -34,6 +34,7 @@ const SignUp = () => {
 
   return (
     <>
+      <Logo src="https://github.com/riya-n/messenger-lite/blob/master/duck.png?raw=true" alt="Messenger Lite" />
       <Page>
         <Title>Create An Account</Title>
         <Subtitle>Sign up to chat with your favorite people!</Subtitle>

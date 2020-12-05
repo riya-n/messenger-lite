@@ -11,6 +11,7 @@ const Chats = (props) => {
   const [conversations, setConversations] = useState([]);
 
   useEffect(async () => {
+    // real time here too TODO
     try {
       const data = await axios.get('/api/chats');
       setConversations(data.data);

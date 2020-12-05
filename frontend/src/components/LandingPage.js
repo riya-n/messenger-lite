@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 import {
-  ActionButton, Page, Title, Subtitle,
+  ActionButton, Page, Title, Subtitle, Logo,
 } from '../styles';
 
 const LandingPage = () => {
@@ -11,6 +11,7 @@ const LandingPage = () => {
 
   return (
     <>
+      <Logo src="https://github.com/riya-n/messenger-lite/blob/master/duck.png?raw=true" alt="Messenger Lite" />
       <Page>
         <Title>
           Hang out whenever,

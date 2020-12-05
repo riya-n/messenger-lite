@@ -35,20 +35,20 @@ router.get('/chat', isAuthenticated, (req, res, next) => {
 });
 
 router.get('/users', isAuthenticated, (req, res, next) => {
-  console.log('in hereee yea');
   User.find({}, (error, users) => {
     if (users) {
-      console.log(users);
-      const usernames = [];
-      users.forEach(({ username }) => {
-        usernames.push(username);
-      });
-      res.send(usernames);
+      // console.log(users);
+      // const usernames = [];
+      // users.forEach(({ username }) => {
+      //   usernames.push(username);
+      // });
+      // console.log(usernames);
+      // res.send(usernames);
+      res.send(users);
     } else {
       next(error);
     }
   });
-  res.send([]);
 });
 
 router.post('/chat', isAuthenticated, async (req, res, next) => {
@@ -63,7 +63,7 @@ router.post('/chat', isAuthenticated, async (req, res, next) => {
   };
 
   try {
-    if (chatId === undefined) {
+    if (chatId === undefined || chatId === '') {
       // new chat
       await Chat.create({ username1: username, username2, msgs: [msgObj] },
         async (error, chat) => {

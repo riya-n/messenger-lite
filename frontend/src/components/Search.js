@@ -37,11 +37,11 @@ const Search = (props) => {
           <>
             <List>
               {
-                users.map((user, i) => ((user.toLowerCase().indexOf(searchStr) > -1)
-                  ? <SearchElement key={`${user}${i}`} onClick={() => onClickUser(user)}>{user}</SearchElement> : ''))
+                users.map(({ username }, i) => ((username.toLowerCase().indexOf(searchStr) > -1)
+                  ? <SearchElement key={`${username}${i}`} onClick={() => onClickUser(username)}>{username}</SearchElement> : ''))
               }
+              <ActionButton type="submit" onClick={() => onClose()}>Close</ActionButton>
             </List>
-            <ActionButton type="submit" onClick={() => onClose()}>Close</ActionButton>
           </>
         ) : ''
       }

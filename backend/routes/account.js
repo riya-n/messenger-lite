@@ -22,7 +22,7 @@ router.post('/signup', async (req, res, next) => {
     req.session.username = username;
     req.session.password = password;
     res.send('account created succesfully');
-  } catch {
+  } catch (error) {
     next('failure occured when creating the user');
   }
 });

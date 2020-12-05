@@ -8,29 +8,33 @@ export const Page = s.div`
 `;
 
 export const MainPage = s.div`
-  margin: 0rem 1rem;
+  margin: 1rem 1rem;
   font-family: Calibre, Helvetica Neue, Segoe UI, Helvetica, Arial, Lucida Grande, sans-serif;
   height: 100%;
   display: flex;
 `;
 
 export const LeftPanel = s.div`
-padding: 1rem 1rem;
+  padding: 1rem 1rem;
   border-right: 1px solid rgb(40, 48, 51, 0.2);
-  width: 40%;
-  height: 100%;
+  width: 30%;
+  height: -webkit-fill-available;
+  display: flex;
+  flex-flow: column;
 `;
 
 export const RightPanel = s.div`
   padding: 1rem 1rem;
   width: -webkit-fill-available;
-  height: 100%;
+  height: -webkit-fill-available;
+  display: flex;
+  flex-flow: column;
 `;
 
 export const Logo = s.img`
   margin: 2rem 2rem;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
 `;
 
 export const LinkWrapper = s.span`
@@ -58,7 +62,7 @@ export const InputBox = s.input`
   }
 `;
 
-export const ActionButton = s.button`
+const Button = s.button`
   cursor: pointer;
   background-color: #0084ff;
   border: 1px solid #0084ff;
@@ -67,8 +71,6 @@ export const ActionButton = s.button`
   line-height: 19px;
   margin-bottom: 12px;
   border-radius: 20px;
-  width: 100%;
-  max-width: 400px;
   &:hover {
     background-color: #5218fa;
   }
@@ -80,8 +82,17 @@ export const ActionButton = s.button`
   }
 `;
 
+export const ActionButton = s(Button)`
+  width: 100%;
+  max-width: 400px;
+`;
+
+export const SendButton = s(Button)`
+  padding: 0rem 1rem;
+  margin-left: 1rem;
+`;
+
 export const Title = s.h1`
-  background: linear-gradient(81.84deg, #0099ff -9.4%, #43cea2 51.57%, #02aab0 84.07%, #185a9d 90.59%);
   background: linear-gradient(81.84deg, #0099ff -9.4%, #a033ff 51.57%, #ff5280 84.07%, #ff7061 90.59%);
   -webkit-background-clip: text;
   color: transparent;
@@ -98,9 +109,17 @@ export const Subtitle = s.h3`
   font-weight: 400;
 `;
 
+export const ChatName = s(Subtitle)`
+  border-bottom: 1px solid rgb(40, 48, 51, 0.2);
+  padding-bottom: 1rem;
+  margin: 0 0 1rem;
+`;
+
 export const List = s.div`
   display: block;
   margin-bottom: 1rem;
+  overflow-y: scroll;
+  height: -webkit-fill-available;
 `;
 
 export const SearchElement = s.div`
@@ -109,7 +128,7 @@ export const SearchElement = s.div`
   cursor: pointer;
   font-size: 14px;
   padding: 10px 10px;
-  overflow: hidden;
+  overflow: scroll;
   padding: 8px 16px;
   margin: 0.5rem 0rem;
   border-radius: 10px;
@@ -131,10 +150,36 @@ export const MyMsg = s(SearchElement)`
   background-color: #0084ff;
   color: white;
   float: right;
+  cursor: default;
+  margin: 2px;
+  max-width: 400px;
+  word-wrap:break-word;
+  &:hover {
+    background-color: #0084ff;
+  }
 `;
 
 export const OtherMsg = s(SearchElement)`
   border-radius: 20px;
   background-color: rgba(0, 0, 0, .04);
   float: left;
+  cursor: default;
+  margin: 2px;
+  max-width: 400px;
+  word-wrap:break-word;
+  &:hover {
+    background-color: rgba(0, 0, 0, .04);
+  }
+`;
+
+export const SendMsgWrapper = s.div`
+  display: flex;
+  position: sticky;
+  bottom: 1rem;
+  width: -webkit-fill-available;
+  padding-top: 1rem;
+`;
+
+export const Break = s.div`
+  clear: both;
 `;

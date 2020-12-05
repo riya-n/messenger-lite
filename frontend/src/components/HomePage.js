@@ -7,7 +7,7 @@ import Search from './Search';
 import Chats from './Chats';
 import Chat from './Chat';
 import {
-  MainPage, ActionButton, RightPanel, LeftPanel
+  MainPage, ActionButton, RightPanel, LeftPanel,
 } from '../styles';
 
 const HomePage = () => {
@@ -27,7 +27,7 @@ const HomePage = () => {
         {
           searching ? '' : <Chats setOtherUser={setOtherUser} otherUser={otherUser} />
         }
-        <ActionButton type="submit" onClick={() => logout()} style={{ display: 'block' }}>Sign Out</ActionButton>
+        <ActionButton type="submit" onClick={() => logout()} style={{ position: 'sticky', bottom: 28 }}>Sign Out</ActionButton>
       </LeftPanel>
       <RightPanel>
         {

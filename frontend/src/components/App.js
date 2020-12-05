@@ -14,7 +14,6 @@ import { Logo } from '../styles';
 
 const App = () => (
   <>
-    <Logo src="https://tinyurl.com/y6mh68tx" alt="Messenger Lite" />
     <Router>
       <Switch>
         <Route exact path="/">

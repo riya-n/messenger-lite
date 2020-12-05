@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 
 import {
-  InputBox, ActionButton, Page, Title, Subtitle, LinkWrapper, ErrorMessage,
+  InputBox, ActionButton, Page, Title, Subtitle, LinkWrapper, ErrorMessage, Logo,
 } from '../styles';
 
 const LogIn = () => {
@@ -25,6 +25,7 @@ const LogIn = () => {
 
   return (
     <>
+      <Logo src="https://github.com/riya-n/messenger-lite/blob/master/duck.png?raw=true" alt="Messenger Lite" />
       <Page>
         <Title>Welcome Back</Title>
         <Subtitle>Sign in to catch up with friends!</Subtitle>

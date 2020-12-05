@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import {
-  Subtitle, InputBox, List, ActionButton, ErrorMessage, MyMsg, OtherMsg,
+  InputBox, List, ErrorMessage, MyMsg, OtherMsg, SendMsgWrapper, ChatName, SendButton, Break,
 } from '../styles';
 
 const Chat = (props) => {
@@ -25,15 +25,16 @@ const Chat = (props) => {
     //     }
     //   });
     // });
-
+    console.log('in chat id func');
     const data = await axios.get('/api/chats');
     let id = '';
     data.data.forEach((chat) => {
       if (chat.username === otherUser) {
-        console.log(chat.chatId);
+        console.log('chatid', chat.chatId);
         id = chat.chatId;
       }
     });
+    setChatId(id);
     return id;
   };
 
@@ -52,7 +53,7 @@ const Chat = (props) => {
     }
   };
 
-  useEffect(async () => {
+  const useEffectFunc = async () => {
     try {
       const id = await getChatId();
       updateConversation(id);
@@ -72,15 +73,26 @@ const Chat = (props) => {
       // eslint-disable-next-line no-console
       console.log(e);
     }
+  };
+
+  useEffect(async () => {
+    await useEffectFunc();
+    // const intervalID = setInterval(async () => {
+    //   await useEffectFunc();
+    // }, 1000);
+
+    // return () => clearInterval(intervalID);
   }, []);
 
   const sendMsg = async () => {
-    setMsg('');
     try {
       setErrorMsg('');
-      await axios.post('/api/chat', { chatId, username2: otherUser, msg });
-
-      updateConversation();
+      const message = msg;
+      setMsg('');
+      await axios.post('/api/chat', { chatId, username2: otherUser, msg: message });
+      // const id = await getChatId();
+      // updateConversation(id);
+      await useEffectFunc();
     } catch (e) {
       setErrorMsg('Unable to send message. Please try again.');
     }
@@ -88,16 +100,28 @@ const Chat = (props) => {
 
   return (
     <>
-      <Subtitle>{otherUser}</Subtitle>
+      <ChatName>{otherUser}</ChatName>
       <List>
         {
           conversation.map((convo) => ((convo.username === otherUser)
-            ? <OtherMsg key={convo.time}>{convo.msg}</OtherMsg> : <MyMsg key={convo.time}>{convo.msg}</MyMsg>))
+            ? (
+              <div key={convo.time}>
+                <OtherMsg key={convo.time}>{convo.msg}</OtherMsg>
+                <Break key={`${convo.time}break`} />
+              </div>
+            ) : (
+              <div key={convo.time}>
+                <MyMsg key={convo.time}>{convo.msg}</MyMsg>
+                <Break key={`${convo.time}break`} />
+              </div>
+            )))
         }
       </List>
-      <InputBox placeholder="Type a message..." onChange={(e) => setMsg(e.target.value)} value={msg} />
+      <SendMsgWrapper>
+        <InputBox placeholder="Type a message..." onChange={(e) => setMsg(e.target.value)} value={msg} styles={{ marginBottom: 0 }} />
+        <SendButton type="submit" onClick={() => sendMsg()}>Send</SendButton>
+      </SendMsgWrapper>
       <ErrorMessage>{errorMsg}</ErrorMessage>
-      <ActionButton type="submit" onClick={() => sendMsg()}>Send</ActionButton>
     </>
   );
 };
