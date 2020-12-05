@@ -5,16 +5,15 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.get('/', (req, res) => {
   const { username } = req.session;
   if (username && username !== '') {
-    res.status(200).send(`${username}`);
+    res.send(username);
   }
 });
 
 router.post('/signup', async (req, res, next) => {
   const { username, password } = req.body;
-  console.log('made it here');
 
   try {
     await User.create({ username, password, chats: [] });

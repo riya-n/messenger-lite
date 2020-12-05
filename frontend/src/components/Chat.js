@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 
 import {
@@ -8,48 +8,36 @@ import {
 } from '../styles';
 
 const Chat = (props) => {
-  const { otherUser } = props;
+  const { getOtherUser } = props;
   const [msg, setMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [conversation, setConversation] = useState([]);
   const [chatId, setChatId] = useState('');
+  const [otherUser, setOtherUser] = useState('');
+  const convoListRef = useRef();
 
   const getChatId = async () => {
-    // await axios.get('/api/chats').then((data) => {
-    //   data.data.forEach((chat) => {
-    //     console.log(chat, chat.username, otherUser);
-    //     if (chat.username === otherUser) {
-    //       console.log(chat.chatId);
-    //       setChatId(chat.chatId);
-    //       return chat.chatId;
-    //     }
-    //   });
-    // });
-    console.log('in chat id func');
     const data = await axios.get('/api/chats');
     let id = '';
+    setChatId('');
     data.data.forEach((chat) => {
       if (chat.username === otherUser) {
-        console.log('chatid', chat.chatId);
         id = chat.chatId;
+        setChatId(id);
       }
     });
-    setChatId(id);
     return id;
   };
 
   const updateConversation = async (id) => {
-    console.log('the id', id);
     if (id !== '') {
       const data = await axios.get(`/api/chat?chatId=${id}`);
-      console.log('data', data);
       if (data.data) {
         // eslint-disable-next-line no-underscore-dangle
-        // chatId = data.data._id;
         setConversation(data.data.msgs);
       }
     } else {
-      console.log('isundef');
+      setConversation([]);
     }
   };
 
@@ -57,18 +45,6 @@ const Chat = (props) => {
     try {
       const id = await getChatId();
       updateConversation(id);
-
-      // console.log('gottt it', id);
-      // await getChatId().then(() => updateConversation(chatId));
-      // await updateConversation();
-      // console.log('in here');
-      // const data = await axios.get('/api/chatid', { username2: otherUser });
-      // console.log('data', data);
-      // if (data.data) {
-      //   // eslint-disable-next-line no-underscore-dangle
-      //   chatId = data.data._id;
-      //   setConversation(data.data.msgs);
-      // }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log(e);
@@ -76,12 +52,12 @@ const Chat = (props) => {
   };
 
   useEffect(async () => {
-    await useEffectFunc();
-    // const intervalID = setInterval(async () => {
-    //   await useEffectFunc();
-    // }, 1000);
+    const intervalID = setInterval(async () => {
+      setOtherUser(getOtherUser());
+      await useEffectFunc();
+    }, 1000);
 
-    // return () => clearInterval(intervalID);
+    return () => clearInterval(intervalID);
   }, []);
 
   const sendMsg = async () => {
@@ -90,8 +66,6 @@ const Chat = (props) => {
       const message = msg;
       setMsg('');
       await axios.post('/api/chat', { chatId, username2: otherUser, msg: message });
-      // const id = await getChatId();
-      // updateConversation(id);
       await useEffectFunc();
     } catch (e) {
       setErrorMsg('Unable to send message. Please try again.');
@@ -101,7 +75,7 @@ const Chat = (props) => {
   return (
     <>
       <ChatName>{otherUser}</ChatName>
-      <List>
+      <List ref={convoListRef}>
         {
           conversation.map((convo) => ((convo.username === otherUser)
             ? (

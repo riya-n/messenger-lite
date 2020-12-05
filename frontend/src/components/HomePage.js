@@ -20,18 +20,21 @@ const HomePage = () => {
     history.push('/');
   };
 
+  const getOtherUser = () => otherUser;
+  const onClickUser = (username) => setOtherUser(username);
+
   return (
     <MainPage>
       <LeftPanel>
-        <Search setOtherUser={setOtherUser} setSearching={setSearching} searching={searching} />
+        <Search setOtherUser={setOtherUser} setSearching={setSearching} searching={searching} onClickUser={onClickUser} />
         {
-          searching ? '' : <Chats setOtherUser={setOtherUser} otherUser={otherUser} />
+          searching ? '' : <Chats setOtherUser={setOtherUser} otherUser={otherUser} onClickUser={onClickUser} />
         }
         <ActionButton type="submit" onClick={() => logout()} style={{ position: 'sticky', bottom: 28 }}>Sign Out</ActionButton>
       </LeftPanel>
       <RightPanel>
         {
-          otherUser ? <Chat otherUser={otherUser} /> : ''
+          otherUser ? <Chat getOtherUser={getOtherUser} /> : ''
         }
       </RightPanel>
     </MainPage>

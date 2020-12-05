@@ -7,34 +7,32 @@ import axios from 'axios';
 import { List, ChatElement, CurrChatElement } from '../styles';
 
 const Chats = (props) => {
-  const { setOtherUser, otherUser, setCurrChatId } = props;
+  const { setOtherUser, otherUser, onClickUser } = props;
   const [conversations, setConversations] = useState([]);
 
   useEffect(async () => {
-    // real time here too TODO
-    try {
-      const data = await axios.get('/api/chats');
-      setConversations(data.data);
+    const intervalID = setInterval(async () => {
+      try {
+        const data = await axios.get('/api/chats');
+        setConversations(data.data);
 
-      if (otherUser === '' && data.data.length > 0) {
-        setOtherUser(data.data[0].username);
+        if (otherUser === '' && data.data.length > 0) {
+          setOtherUser(data.data[0].username);
+        }
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e);
       }
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(e);
-    }
-  }, []);
+    }, 1000);
 
-  const onClickUser = (user, chatId) => {
-    setOtherUser(user);
-    setCurrChatId(chatId);
-  };
+    return () => clearInterval(intervalID);
+  }, []);
 
   return (
     <List>
       {
-        conversations.map(({ username, chatId }, i) => ((username === otherUser)
-          ? <CurrChatElement key={`${username}${i}`}>{username}</CurrChatElement> : <ChatElement key={`${username}${i}`} onClick={() => onClickUser(username, chatId)}>{username}</ChatElement>))
+        conversations.map(({ username }, i) => ((username === otherUser)
+          ? <CurrChatElement key={`${username}${i}`}>{username}</CurrChatElement> : <ChatElement key={`${username}${i}`} onClick={() => onClickUser(username)}>{username}</ChatElement>))
       }
     </List>
   );

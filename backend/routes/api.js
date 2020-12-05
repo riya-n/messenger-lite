@@ -19,31 +19,20 @@ router.get('/chats', isAuthenticated, (req, res, next) => {
 });
 
 router.get('/chat', isAuthenticated, (req, res, next) => {
-  // console.log(req);
   const { chatId } = req.query;
-  console.log('chatid', chatId);
 
   Chat.findById(chatId, (error, chat) => {
     if (chat) {
-      console.log('sending', chat);
       res.send(chat);
     } else {
-      console.log('ooopppps');
       next(error);
     }
   });
 });
 
-router.get('/users', isAuthenticated, (req, res, next) => {
+router.get('/users', (req, res, next) => {
   User.find({}, (error, users) => {
     if (users) {
-      // console.log(users);
-      // const usernames = [];
-      // users.forEach(({ username }) => {
-      //   usernames.push(username);
-      // });
-      // console.log(usernames);
-      // res.send(usernames);
       res.send(users);
     } else {
       next(error);

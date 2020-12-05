@@ -9,12 +9,14 @@ import {
 } from '../styles';
 
 const Search = (props) => {
-  const { setOtherUser, setSearching, searching } = props;
+  const { setSearching, searching, onClickUser } = props;
   const [searchStr, setSearchStr] = useState('');
   const [users, setUsers] = useState([]);
+  const [curr, setCurr] = useState('');
 
   const onSearch = async () => {
     setSearching(true);
+    await axios.get('/account/').then((data) => setCurr(data.data));
     await axios.get('/api/users').then((data) => setUsers(data.data));
   };
 
@@ -23,10 +25,10 @@ const Search = (props) => {
     setSearchStr('');
   };
 
-  const onClickUser = (user) => {
+  const onClickUserHere = (user) => {
     setSearching(false);
     setSearchStr('');
-    setOtherUser(user);
+    onClickUser(user);
   };
 
   return (
@@ -37,8 +39,8 @@ const Search = (props) => {
           <>
             <List>
               {
-                users.map(({ username }, i) => ((username.toLowerCase().indexOf(searchStr) > -1)
-                  ? <SearchElement key={`${username}${i}`} onClick={() => onClickUser(username)}>{username}</SearchElement> : ''))
+                users.map(({ username }, i) => ((username.toLowerCase().indexOf(searchStr) > -1 && username !== curr)
+                  ? <SearchElement key={`${username}${i}`} onClick={() => onClickUserHere(username)}>{username}</SearchElement> : ''))
               }
               <ActionButton type="submit" onClick={() => onClose()}>Close</ActionButton>
             </List>
