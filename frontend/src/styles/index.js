@@ -128,7 +128,8 @@ export const SearchElement = s.div`
   cursor: pointer;
   font-size: 14px;
   padding: 10px 10px;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding: 8px 16px;
   margin: 0.5rem 0rem;
   border-radius: 10px;
@@ -182,4 +183,10 @@ export const SendMsgWrapper = s.div`
 
 export const Break = s.div`
   clear: both;
+`;
+
+export const NoChatsMsg = s.div`
+  align-self: center;
+  color: #595959;
+  margin-top: 2rem;
 `;

@@ -34,7 +34,7 @@ router.get('/chat', isAuthenticated, (req, res, next) => {
   });
 });
 
-router.get('/users', isAuthenticated, (req, res, next) => {
+router.get('/users', (req, res, next) => {
   User.find({}, (error, users) => {
     if (users) {
       // console.log(users);

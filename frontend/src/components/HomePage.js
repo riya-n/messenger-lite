@@ -7,7 +7,7 @@ import Search from './Search';
 import Chats from './Chats';
 import Chat from './Chat';
 import {
-  MainPage, ActionButton, RightPanel, LeftPanel,
+  MainPage, ActionButton, RightPanel, LeftPanel, NoChatsMsg,
 } from '../styles';
 
 const HomePage = () => {
@@ -31,7 +31,8 @@ const HomePage = () => {
       </LeftPanel>
       <RightPanel>
         {
-          otherUser ? <Chat otherUser={otherUser} /> : ''
+          otherUser ? <Chat otherUser={otherUser} />
+            : <NoChatsMsg>Search for friends and family to start chatting with them!</NoChatsMsg>
         }
       </RightPanel>
     </MainPage>

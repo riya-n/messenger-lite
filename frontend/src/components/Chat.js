@@ -76,7 +76,12 @@ const Chat = (props) => {
   };
 
   useEffect(async () => {
-    await useEffectFunc();
+    const intervalID = setInterval(async () => {
+      await useEffectFunc();
+    }, 1000);
+
+    // return () => clearInterval(intervalID);
+    return () => clearInterval(intervalID);
     // const intervalID = setInterval(async () => {
     //   await useEffectFunc();
     // }, 1000);

@@ -5,10 +5,10 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
+router.get('/', (req, res) => {
   const { username } = req.session;
   if (username && username !== '') {
-    res.status(200).send(`${username}`);
+    res.send(username);
   }
 });
 

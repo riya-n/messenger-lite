@@ -11,18 +11,21 @@ const Chats = (props) => {
   const [conversations, setConversations] = useState([]);
 
   useEffect(async () => {
-    // real time here too TODO
-    try {
-      const data = await axios.get('/api/chats');
-      setConversations(data.data);
+    const intervalID = setInterval(async () => {
+      try {
+        const data = await axios.get('/api/chats');
+        setConversations(data.data);
 
-      if (otherUser === '' && data.data.length > 0) {
-        setOtherUser(data.data[0].username);
+        if (otherUser === '' && data.data.length > 0) {
+          setOtherUser(data.data[0].username);
+        }
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.log(e);
       }
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(e);
-    }
+    }, 1000);
+
+    return () => clearInterval(intervalID);
   }, []);
 
   const onClickUser = (user, chatId) => {
@@ -33,8 +36,10 @@ const Chats = (props) => {
   return (
     <List>
       {
-        conversations.map(({ username, chatId }, i) => ((username === otherUser)
-          ? <CurrChatElement key={`${username}${i}`}>{username}</CurrChatElement> : <ChatElement key={`${username}${i}`} onClick={() => onClickUser(username, chatId)}>{username}</ChatElement>))
+        conversations.length > 0
+          ? conversations.map(({ username, chatId }, i) => ((username === otherUser)
+            ? <CurrChatElement key={`${username}${i}`}>{username}</CurrChatElement> : <ChatElement key={`${username}${i}`} onClick={() => onClickUser(username, chatId)}>{username}</ChatElement>))
+          : <ChatElement>No active chats.</ChatElement>
       }
     </List>
   );
