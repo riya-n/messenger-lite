@@ -10,7 +10,6 @@ import LandingPage from './LandingPage';
 import HomePage from './HomePage';
 import LogIn from './LogIn';
 import SignUp from './SignUp';
-import { Logo } from '../styles';
 
 const App = () => (
   <>
@@ -19,7 +18,7 @@ const App = () => (
         <Route exact path="/">
           <LandingPage />
         </Route>
-        <Route path="/home">
+        <Route path="/c/:id">
           <HomePage />
         </Route>
         <Route path="/signup">

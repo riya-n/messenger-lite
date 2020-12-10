@@ -17,7 +17,7 @@ const LogIn = () => {
     try {
       setErrorMsg('');
       await axios.post('/account/login', { username, password });
-      history.push('/home');
+      history.push('/c/home');
     } catch (e) {
       setErrorMsg('Failed to sign in. Please try again.');
     }

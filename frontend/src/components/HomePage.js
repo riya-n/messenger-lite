@@ -1,18 +1,20 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+//import { useParams } from 'react-router';
 
 import Search from './Search';
 import Chats from './Chats';
 import Chat from './Chat';
 import {
-  MainPage, ActionButton, RightPanel, LeftPanel, NoChatsMsg,
+  MainPage, ActionButton, RightPanel, LeftPanel,
 } from '../styles';
 
 const HomePage = () => {
+  const { id } = useParams();
   const [searching, setSearching] = useState(false);
-  const [otherUser, setOtherUser] = useState('');
+  // const [otherUser, setOtherUser] = useState('');
   const history = useHistory();
 
   const logout = async () => {
@@ -23,17 +25,14 @@ const HomePage = () => {
   return (
     <MainPage>
       <LeftPanel>
-        <Search setOtherUser={setOtherUser} setSearching={setSearching} searching={searching} />
+        <Search setSearching={setSearching} searching={searching} />
         {
-          searching ? '' : <Chats setOtherUser={setOtherUser} otherUser={otherUser} />
+          searching ? '' : <Chats />
         }
         <ActionButton type="submit" onClick={() => logout()} style={{ position: 'sticky', bottom: 28 }}>Sign Out</ActionButton>
       </LeftPanel>
       <RightPanel>
-        {
-          otherUser ? <Chat otherUser={otherUser} />
-            : <NoChatsMsg>Search for friends and family to start chatting with them!</NoChatsMsg>
-        }
+        <Chat />
       </RightPanel>
     </MainPage>
   );

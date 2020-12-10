@@ -3,12 +3,16 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useHistory, useParams } from 'react-router-dom';
+// import { useParams } from 'react-router';
 
 import { List, ChatElement, CurrChatElement } from '../styles';
 
-const Chats = (props) => {
-  const { setOtherUser, otherUser, setCurrChatId } = props;
+const Chats = () => {
+  let { id } = useParams();
+  // const { setOtherUser, otherUser, setCurrChatId } = props;
   const [conversations, setConversations] = useState([]);
+  const history = useHistory();
 
   useEffect(async () => {
     const intervalID = setInterval(async () => {
@@ -16,8 +20,11 @@ const Chats = (props) => {
         const data = await axios.get('/api/chats');
         setConversations(data.data);
 
-        if (otherUser === '' && data.data.length > 0) {
-          setOtherUser(data.data[0].username);
+        if (id === 'home' && data.data.length > 0) {
+          id = data.data[0].username;
+          await axios.post('/api/user2', { id });
+          history.push(`/c/${id}`);
+          // setOtherUser(data.data[0].username);
         }
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -28,16 +35,16 @@ const Chats = (props) => {
     return () => clearInterval(intervalID);
   }, []);
 
-  const onClickUser = (user, chatId) => {
-    setOtherUser(user);
-    setCurrChatId(chatId);
+  const onClickUser = async (user) => {
+    await axios.post('/api/user2', { id: user });
+    history.push(`/c/${user}`);
   };
 
   return (
     <List>
       {
         conversations.length > 0
-          ? conversations.map(({ username, chatId }, i) => ((username === otherUser)
+          ? conversations.map(({ username, chatId }, i) => ((username === id)
             ? <CurrChatElement key={`${username}${i}`}>{username}</CurrChatElement> : <ChatElement key={`${username}${i}`} onClick={() => onClickUser(username, chatId)}>{username}</ChatElement>))
           : <ChatElement>No active chats.</ChatElement>
       }

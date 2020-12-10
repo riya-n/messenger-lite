@@ -3,16 +3,18 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 import {
   InputBox, List, SearchElement, ActionButton,
 } from '../styles';
 
 const Search = (props) => {
-  const { setOtherUser, setSearching, searching } = props;
+  const { setSearching, searching } = props;
   const [searchStr, setSearchStr] = useState('');
   const [users, setUsers] = useState([]);
   const [curr, setCurr] = useState('');
+  const history = useHistory();
 
   const onSearch = async () => {
     setSearching(true);
@@ -25,10 +27,11 @@ const Search = (props) => {
     setSearchStr('');
   };
 
-  const onClickUser = (user) => {
+  const onClickUser = async (user) => {
     setSearching(false);
     setSearchStr('');
-    setOtherUser(user);
+    await axios.post('/api/user2', { id: user });
+    history.push(`/c/${user}`);
   };
 
   return (

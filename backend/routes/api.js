@@ -6,6 +6,27 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 
 const router = express.Router();
 
+router.post('/user2', isAuthenticated, (req, res, next) => {
+  const { id } = req.body;
+
+  if (id && id !== '') {
+    req.session.username2 = id;
+    res.send('other user updated successfully');
+  } else {
+    next('error while updating other user');
+  }
+});
+
+router.get('/user2', isAuthenticated, (req, res, next) => {
+  const { username2 } = req.session;
+
+  if (username2 && username2 !== '') {
+    res.send(username2);
+  } else {
+    next('error while getting other user');
+  }
+});
+
 router.get('/chats', isAuthenticated, (req, res, next) => {
   const { username } = req.session;
 
@@ -37,13 +58,6 @@ router.get('/chat', isAuthenticated, (req, res, next) => {
 router.get('/users', (req, res, next) => {
   User.find({}, (error, users) => {
     if (users) {
-      // console.log(users);
-      // const usernames = [];
-      // users.forEach(({ username }) => {
-      //   usernames.push(username);
-      // });
-      // console.log(usernames);
-      // res.send(usernames);
       res.send(users);
     } else {
       next(error);

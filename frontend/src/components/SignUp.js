@@ -24,7 +24,7 @@ const SignUp = () => {
         try {
           setErrorMsg('');
           await axios.post('/account/signup', { username, password });
-          history.push('/home');
+          history.push('/c/home');
         } catch (e) {
           setErrorMsg('Failed to sign up. Please try again.');
         }
