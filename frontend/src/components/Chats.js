@@ -4,13 +4,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
-// import { useParams } from 'react-router';
 
 import { List, ChatElement, CurrChatElement } from '../styles';
 
 const Chats = () => {
   let { id } = useParams();
-  // const { setOtherUser, otherUser, setCurrChatId } = props;
   const [conversations, setConversations] = useState([]);
   const history = useHistory();
 
@@ -24,7 +22,6 @@ const Chats = () => {
           id = data.data[0].username;
           await axios.post('/api/user2', { id });
           history.push(`/c/${id}`);
-          // setOtherUser(data.data[0].username);
         }
       } catch (e) {
         // eslint-disable-next-line no-console
@@ -45,7 +42,15 @@ const Chats = () => {
       {
         conversations.length > 0
           ? conversations.map(({ username, chatId }, i) => ((username === id)
-            ? <CurrChatElement key={`${username}${i}`}>{username}</CurrChatElement> : <ChatElement key={`${username}${i}`} onClick={() => onClickUser(username, chatId)}>{username}</ChatElement>))
+            ? <CurrChatElement key={`${username}${i}`}>{username}</CurrChatElement>
+            : (
+              <ChatElement
+                key={`${username}${i}`}
+                onClick={() => onClickUser(username, chatId)}
+              >
+                {username}
+              </ChatElement>
+            )))
           : <ChatElement>No active chats.</ChatElement>
       }
     </List>

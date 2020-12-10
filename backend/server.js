@@ -9,7 +9,6 @@ const isAuthenticated = require('./middlewares/isAuthenticated');
 
 const app = express();
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/messenger-lite';
-// const port = process.env.PORT || 3000;
 const port = 3000;
 
 mongoose.connect(MONGO_URI, {
@@ -33,16 +32,6 @@ app.get('/', (req, res) => res.send('in here'));
 app.use('/api', ApiRouter);
 app.use('/account', AccountRouter);
 app.use(isAuthenticated);
-// app.use((err, req, res, next) => {
-//   if (res.headersSent) {
-//     return next(err);
-//   }
-//   console.log('ooopsss here we go');
-//   res.status(500);
-//   res.render('error', { error: err });
-//   //res.send(err);
-//   return res;
-// });
 
 app.get('/favicon.ico', (_, res) => res.status(404).send());
 app.get('*', (_, res) => {

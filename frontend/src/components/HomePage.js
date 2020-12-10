@@ -1,8 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory, useParams } from 'react-router-dom';
-//import { useParams } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import Search from './Search';
 import Chats from './Chats';
@@ -12,9 +11,7 @@ import {
 } from '../styles';
 
 const HomePage = () => {
-  const { id } = useParams();
   const [searching, setSearching] = useState(false);
-  // const [otherUser, setOtherUser] = useState('');
   const history = useHistory();
 
   const logout = async () => {
@@ -29,7 +26,13 @@ const HomePage = () => {
         {
           searching ? '' : <Chats />
         }
-        <ActionButton type="submit" onClick={() => logout()} style={{ position: 'sticky', bottom: 28 }}>Sign Out</ActionButton>
+        <ActionButton
+          type="submit"
+          onClick={() => logout()}
+          style={{ position: 'sticky', bottom: 28 }}
+        >
+          Sign Out
+        </ActionButton>
       </LeftPanel>
       <RightPanel>
         <Chat />

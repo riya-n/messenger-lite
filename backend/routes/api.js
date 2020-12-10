@@ -40,16 +40,12 @@ router.get('/chats', isAuthenticated, (req, res, next) => {
 });
 
 router.get('/chat', isAuthenticated, (req, res, next) => {
-  // console.log(req);
   const { chatId } = req.query;
-  console.log('chatid', chatId);
 
   Chat.findById(chatId, (error, chat) => {
     if (chat) {
-      console.log('sending', chat);
       res.send(chat);
     } else {
-      console.log('ooopppps');
       next(error);
     }
   });

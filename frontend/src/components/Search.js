@@ -36,14 +36,27 @@ const Search = (props) => {
 
   return (
     <>
-      <InputBox placeholder="Search Users" onChange={(e) => setSearchStr(e.target.value)} onClick={() => onSearch()} value={searchStr} />
+      <InputBox
+        placeholder="Search Users"
+        onChange={(e) => setSearchStr(e.target.value)}
+        onClick={() => onSearch()}
+        value={searchStr}
+      />
       {
         searching ? (
           <>
             <List>
               {
-                users.map(({ username }, i) => ((username.toLowerCase().indexOf(searchStr) > -1 && username !== curr)
-                  ? <SearchElement key={`${username}${i}`} onClick={() => onClickUser(username)}>{username}</SearchElement> : ''))
+                users.map(({ username }, i) => ((username.toLowerCase().indexOf(searchStr) > -1
+                  && username !== curr)
+                  ? (
+                    <SearchElement
+                      key={`${username}${i}`}
+                      onClick={() => onClickUser(username)}
+                    >
+                      {username}
+                    </SearchElement>
+                  ) : ''))
               }
               <ActionButton type="submit" onClick={() => onClose()}>Close</ActionButton>
             </List>

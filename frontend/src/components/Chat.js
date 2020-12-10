@@ -52,7 +52,6 @@ const Chat = () => {
       const idChat = await getChatId();
       updateConversation(idChat);
 
-      console.log('id: ', id);
       intervalID = setTimeout(useEffectFunc, 1000);
     } catch (e) {
       // eslint-disable-next-line no-console
@@ -61,18 +60,7 @@ const Chat = () => {
   };
 
   useEffect(async () => {
-    // const intervalID = setInterval(async () => {
-    //   console.log('id: ', id);
-    //   await useEffectFunc();
-    // }, 1000);
-
     await useEffectFunc();
-
-    // return () => clearInterval(intervalID);
-    // const intervalID = setTimeout(async () => {
-    //   console.log('id: ', id);
-      
-    // }, 1000);
 
     return () => clearTimeout(intervalID);
   }, [id]);
@@ -92,7 +80,11 @@ const Chat = () => {
   return (
     <>
       {
-        id === 'home' ? <NoChatsMsg>Search for friends and family to start chatting with them!</NoChatsMsg>
+        id === 'home' ? (
+          <NoChatsMsg>
+            Search for friends and family to start chatting with them!
+          </NoChatsMsg>
+        )
           : (
             <>
               <ChatName>{id}</ChatName>
@@ -113,7 +105,12 @@ const Chat = () => {
                 }
               </List>
               <SendMsgWrapper>
-                <InputBox placeholder="Type a message..." onChange={(e) => setMsg(e.target.value)} value={msg} styles={{ marginBottom: 0 }} />
+                <InputBox
+                  placeholder="Type a message..."
+                  onChange={(e) => setMsg(e.target.value)}
+                  value={msg}
+                  styles={{ marginBottom: 0 }}
+                />
                 <SendButton type="submit" onClick={() => sendMsg()}>Send</SendButton>
               </SendMsgWrapper>
               <ErrorMessage>{errorMsg}</ErrorMessage>

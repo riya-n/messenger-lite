@@ -25,13 +25,26 @@ const LogIn = () => {
 
   return (
     <>
-      <Logo src="https://github.com/riya-n/messenger-lite/blob/master/duck.png?raw=true" alt="Messenger Lite" />
+      <Logo
+        src="https://github.com/riya-n/messenger-lite/blob/master/duck.png?raw=true"
+        alt="Messenger Lite"
+      />
       <Page>
         <Title>Welcome Back</Title>
         <Subtitle>Sign in to catch up with friends!</Subtitle>
         <InputBox placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-        <InputBox placeholder="Password" type="password" onChange={(e) => setPassword(e.target.value)} />
-        <ActionButton type="submit" onClick={() => login()} style={{ width: 400 }}>Sign In</ActionButton>
+        <InputBox
+          placeholder="Password"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <ActionButton
+          type="submit"
+          onClick={() => login()}
+          style={{ width: 400 }}
+        >
+          Sign In
+        </ActionButton>
         <LinkWrapper><Link to="/signup">Or sign up here</Link></LinkWrapper>
         <ErrorMessage>{errorMsg}</ErrorMessage>
       </Page>

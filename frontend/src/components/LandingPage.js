@@ -11,7 +11,10 @@ const LandingPage = () => {
 
   return (
     <>
-      <Logo src="https://github.com/riya-n/messenger-lite/blob/master/duck.png?raw=true" alt="Messenger Lite" />
+      <Logo
+        src="https://github.com/riya-n/messenger-lite/blob/master/duck.png?raw=true"
+        alt="Messenger Lite"
+      />
       <Page>
         <Title>
           Hang out whenever,
@@ -20,8 +23,20 @@ const LandingPage = () => {
           wherever
         </Title>
         <Subtitle>An easy and fun way to stay in touch with your family and friends.</Subtitle>
-        <ActionButton type="submit" onClick={() => history.push('/login')} style={{ display: 'block' }}>Sign In</ActionButton>
-        <ActionButton type="submit" onClick={() => history.push('/signup')} style={{ display: 'block' }}>Sign Up</ActionButton>
+        <ActionButton
+          type="submit"
+          onClick={() => history.push('/login')}
+          style={{ display: 'block' }}
+        >
+          Sign In
+        </ActionButton>
+        <ActionButton
+          type="submit"
+          onClick={() => history.push('/signup')}
+          style={{ display: 'block' }}
+        >
+          Sign Up
+        </ActionButton>
       </Page>
     </>
   );
